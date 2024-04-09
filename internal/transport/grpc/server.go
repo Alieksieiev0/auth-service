@@ -92,6 +92,7 @@ func (as *GRPCAuthServiceServer) ReadClaims(
 	}
 
 	claims := &proto.UserClaims{
+		UserId:    userClaims.UserId,
 		Username:  userClaims.Username,
 		Email:     userClaims.Email,
 		Algorithm: userClaims.Algorithm,

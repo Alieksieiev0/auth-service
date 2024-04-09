@@ -21,14 +21,15 @@ message User {
 }
 
 message UserClaims {
-    string username = 1;
-    string email = 2;
-    string algorithm = 3;
-    string issuer = 4;
-    string subject = 5;
-    repeated string audience = 6;
-    google.protobuf.Timestamp expires_at = 7;
-    google.protobuf.Timestamp not_before = 8;
-    google.protobuf.Timestamp issued_at = 9;
-    string id = 10;
+    string user_id = 1;
+    string username = 2;
+    string email = 3;
+    string algorithm = 4;
+    string issuer = 5;
+    string subject = 6;
+    repeated string audience = 7;
+    google.protobuf.Timestamp expires_at = 8;
+    google.protobuf.Timestamp not_before = 9;
+    google.protobuf.Timestamp issued_at = 10;
+    string id = 11;
 }

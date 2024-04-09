@@ -23,6 +23,7 @@ type JWTService struct{}
 
 func (js *JWTService) Create(user *types.User, expiresAfter time.Duration) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, types.UserClaims{
+		UserId:    user.Id,
 		Username:  user.Username,
 		Email:     user.Email,
 		Algorithm: jwt.SigningMethodHS256.Name,

@@ -70,6 +70,7 @@ func (as *authService) Login(ctx context.Context, user *types.User) (*types.Toke
 	}
 
 	respUser := &types.User{
+		Id:       resp.Id,
 		Username: resp.Username,
 		Email:    resp.Email,
 		Password: resp.Password,
