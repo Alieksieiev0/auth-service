@@ -14,7 +14,7 @@ const exp time.Duration = time.Hour * 6
 
 type AuthService interface {
 	Register(ctx context.Context, user *types.User) error
-	Login(ctx context.Context, user *types.User) (*types.Token, error)
+	Login(ctx context.Context, user *types.User) (*types.UserToken, error)
 	ReadClaims(ctx context.Context, token *types.Token) (*types.UserClaims, error)
 }
 
@@ -51,7 +51,7 @@ func (as *authService) Register(ctx context.Context, user *types.User) error {
 	return err
 }
 
-func (as *authService) Login(ctx context.Context, user *types.User) (*types.Token, error) {
+func (as *authService) Login(ctx context.Context, user *types.User) (*types.UserToken, error) {
 	if user.Username == "" && user.Password == "" {
 		return nil, fmt.Errorf("insufficient user data")
 	}
@@ -73,13 +73,20 @@ func (as *authService) Login(ctx context.Context, user *types.User) (*types.Toke
 		Id:       resp.Id,
 		Username: resp.Username,
 		Email:    resp.Email,
-		Password: resp.Password,
 	}
 	token, err := as.tokenService.Create(respUser, exp)
 	if err != nil {
 		return nil, err
 	}
-	return &types.Token{Value: token}, nil
+
+	userToken := &types.UserToken{
+		User: *respUser,
+		Token: types.Token{
+			Value: token,
+		},
+	}
+
+	return userToken, nil
 }
 
 func (as *authService) ReadClaims(

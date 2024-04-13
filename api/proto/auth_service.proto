@@ -1,23 +1,14 @@
 syntax = "proto3";
-import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/Alieksieiev0/auth-service/api/proto";
+option go_package = "github.com/Alieksieiev0/feed-service/api/proto";
 
 service AuthService {
-    rpc Register(User) returns (google.protobuf.Empty);
-    rpc Login(User) returns (Token);
     rpc ReadClaims(Token) returns (UserClaims);
 }
 
 message Token {
     string value = 1;
-}
-
-message User {
-    string username = 1;
-    string password = 2;
-    string email = 3;
 }
 
 message UserClaims {

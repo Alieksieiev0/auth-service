@@ -11,7 +11,6 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
-	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -24,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserServiceClient interface {
 	GetByUsername(ctx context.Context, in *UsernameRequest, opts ...grpc.CallOption) (*UserResponse, error)
-	Save(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	Save(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*SaveResponse, error)
 }
 
 type userServiceClient struct {
@@ -44,8 +43,8 @@ func (c *userServiceClient) GetByUsername(ctx context.Context, in *UsernameReque
 	return out, nil
 }
 
-func (c *userServiceClient) Save(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	out := new(emptypb.Empty)
+func (c *userServiceClient) Save(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*SaveResponse, error) {
+	out := new(SaveResponse)
 	err := c.cc.Invoke(ctx, "/UserService/Save", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -58,7 +57,7 @@ func (c *userServiceClient) Save(ctx context.Context, in *UserRequest, opts ...g
 // for forward compatibility
 type UserServiceServer interface {
 	GetByUsername(context.Context, *UsernameRequest) (*UserResponse, error)
-	Save(context.Context, *UserRequest) (*emptypb.Empty, error)
+	Save(context.Context, *UserRequest) (*SaveResponse, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
 
@@ -69,7 +68,7 @@ type UnimplementedUserServiceServer struct {
 func (UnimplementedUserServiceServer) GetByUsername(context.Context, *UsernameRequest) (*UserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetByUsername not implemented")
 }
-func (UnimplementedUserServiceServer) Save(context.Context, *UserRequest) (*emptypb.Empty, error) {
+func (UnimplementedUserServiceServer) Save(context.Context, *UserRequest) (*SaveResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Save not implemented")
 }
 func (UnimplementedUserServiceServer) mustEmbedUnimplementedUserServiceServer() {}

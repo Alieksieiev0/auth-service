@@ -16,12 +16,12 @@ func login(service services.AuthService) fiber.Handler {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": err.Error()})
 		}
 
-		token, err := service.Login(c.Context(), user)
+		userToken, err := service.Login(c.Context(), user)
 		if err != nil {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": err.Error()})
 		}
 
-		return c.Status(http.StatusOK).JSON(token)
+		return c.Status(http.StatusOK).JSON(userToken)
 	}
 }
 

@@ -8,16 +8,18 @@ import (
 )
 
 type RESTServer struct {
-	app *fiber.App
+	app  *fiber.App
+	addr string
 }
 
-func NewServer(app *fiber.App) *RESTServer {
+func NewServer(app *fiber.App, addr string) *RESTServer {
 	return &RESTServer{
-		app: app,
+		app:  app,
+		addr: addr,
 	}
 }
 
-func (us *RESTServer) Start(addr string, service services.AuthService) error {
+func (us *RESTServer) Start(service services.AuthService) error {
 	us.app.Use(logger.New(logger.Config{
 		Format: "${time} | ${status} | ${latency} | ${method} | ${path} | ${error}\nResponse Body: ${resBody}\n",
 	}))
@@ -26,5 +28,5 @@ func (us *RESTServer) Start(addr string, service services.AuthService) error {
 	us.app.Post("/login", login(service))
 	us.app.Post("/register", register(service))
 
-	return us.app.Listen(addr)
+	return us.app.Listen(us.addr)
 }
