@@ -67,10 +67,20 @@ func (as *GRPCAuthServiceServer) ReadClaims(
 		Issuer:    userClaims.Issuer,
 		Subject:   userClaims.Subject,
 		Audience:  userClaims.Audience,
-		ExpiresAt: timestamppb.New(userClaims.ExpiresAt.Time),
-		NotBefore: timestamppb.New(userClaims.NotBefore.Time),
-		IssuedAt:  timestamppb.New(userClaims.IssuedAt.Time),
 		Id:        userClaims.ID,
 	}
+
+	if userClaims.ExpiresAt != nil {
+		claims.ExpiresAt = timestamppb.New(userClaims.ExpiresAt.Time)
+	}
+
+	if userClaims.NotBefore != nil {
+		claims.NotBefore = timestamppb.New(userClaims.NotBefore.Time)
+	}
+
+	if userClaims.IssuedAt != nil {
+		claims.IssuedAt = timestamppb.New(userClaims.IssuedAt.Time)
+	}
+
 	return claims, err
 }

@@ -38,7 +38,7 @@ func register(service services.AuthService) fiber.Handler {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": err.Error()})
 		}
 
-		c.Status(http.StatusOK)
+		c.Status(http.StatusCreated)
 		return nil
 	}
 }
