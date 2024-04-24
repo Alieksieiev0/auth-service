@@ -25,7 +25,7 @@ func Run() {
 		g            = new(errgroup.Group)
 	)
 
-	client, err := grpc.NewGRPCClient(*grpcClientAddr)
+	client, err := grpc.NewGRPCUserServiceClient(*grpcClientAddr)
 	if err != nil {
 		log.Fatal(err)
 	}

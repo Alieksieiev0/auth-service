@@ -2,6 +2,7 @@ package grpc
 
 import (
 	"context"
+	"fmt"
 	"net"
 
 	"github.com/Alieksieiev0/auth-service/api/proto"
@@ -12,7 +13,8 @@ import (
 )
 
 type GRPCServer struct {
-	addr string
+	addr   string
+	server *grpc.Server
 }
 
 func NewServer(addr string) *GRPCServer {
@@ -22,18 +24,28 @@ func NewServer(addr string) *GRPCServer {
 }
 
 func (s *GRPCServer) Start(service services.AuthService) error {
-	grpcAuthServiceServer := NewGRPCAuthServiceServer(service)
-
+	s.initializeServer(service)
 	ln, err := net.Listen("tcp", s.addr)
 	if err != nil {
 		return err
 	}
 
-	var opts []grpc.ServerOption
-	server := grpc.NewServer(opts...)
-	proto.RegisterAuthServiceServer(server, grpcAuthServiceServer)
+	return s.server.Serve(ln)
+}
 
-	return server.Serve(ln)
+func (s *GRPCServer) Stop() error {
+	if s.server == nil {
+		return fmt.Errorf("server is not initialized to be stopped")
+	}
+
+	s.server.Stop()
+	return nil
+}
+
+func (s *GRPCServer) initializeServer(service services.AuthService) {
+	s.server = grpc.NewServer()
+	grpcAuthServiceServer := NewGRPCAuthServiceServer(service)
+	proto.RegisterAuthServiceServer(s.server, grpcAuthServiceServer)
 }
 
 type GRPCAuthServiceServer struct {

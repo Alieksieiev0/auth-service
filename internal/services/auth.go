@@ -31,34 +31,22 @@ func NewAuthService(client proto.UserServiceClient, tokenService TokenService) A
 }
 
 func (as *authService) Register(ctx context.Context, user *types.User) error {
-	fmt.Printf("%+v\n", user)
-	if user.Username == "" && user.Email == "" && user.Password == "" {
-		return fmt.Errorf("insufficient user data")
-	}
-
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
-	if err != nil {
-		return err
-	}
-
-	user.Password = ""
 	userRequest := &proto.UserRequest{
 		Username: user.Username,
 		Email:    user.Email,
-		Password: string(hashedPassword),
+		Password: user.Password,
 	}
-	_, err = as.client.Save(ctx, userRequest)
+
+	user.Password = ""
+	_, err := as.client.Save(ctx, userRequest)
 	return err
 }
 
 func (as *authService) Login(ctx context.Context, user *types.User) (*types.UserToken, error) {
-	if user.Username == "" && user.Password == "" {
-		return nil, fmt.Errorf("insufficient user data")
-	}
-
 	username := &proto.UsernameRequest{
 		Username: user.Username,
 	}
+
 	resp, err := as.client.GetByUsername(ctx, username)
 	if err != nil {
 		return nil, fmt.Errorf("user with such username does not exist")
@@ -93,6 +81,7 @@ func (as *authService) ReadClaims(
 	ctx context.Context,
 	token *types.Token,
 ) (*types.UserClaims, error) {
+	fmt.Println(as.tokenService)
 	claims, err := as.tokenService.Read(token.Value)
 	if err != nil {
 		return nil, err
