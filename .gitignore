@@ -21,4 +21,5 @@
 go.work
 .env
 tmp/
-cover.*
+cover.cov
+cover.html
