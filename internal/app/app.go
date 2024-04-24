@@ -24,6 +24,7 @@ func Run() {
 		app          = fiber.New()
 		g            = new(errgroup.Group)
 	)
+	flag.Parse()
 
 	client, err := grpc.NewGRPCUserServiceClient(*grpcClientAddr)
 	if err != nil {
