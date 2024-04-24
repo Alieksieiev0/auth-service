@@ -1,7 +1,6 @@
 package rest
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/Alieksieiev0/auth-service/internal/services"
@@ -34,7 +33,6 @@ func login(service services.AuthService) fiber.Handler {
 func register(service services.AuthService) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		user := &types.User{}
-		fmt.Println(string(c.Body()))
 		if err := c.BodyParser(user); err != nil {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": err.Error()})
 		}

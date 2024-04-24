@@ -81,7 +81,6 @@ func (as *authService) ReadClaims(
 	ctx context.Context,
 	token *types.Token,
 ) (*types.UserClaims, error) {
-	fmt.Println(as.tokenService)
 	claims, err := as.tokenService.Read(token.Value)
 	if err != nil {
 		return nil, err
