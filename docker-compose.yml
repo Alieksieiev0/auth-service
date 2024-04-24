@@ -1,0 +1,8 @@
+services:
+  auth-service:
+    build: .
+    ports:
+      - "3001:3001"
+      - "4001:4001"
+    volumes:
+      - ./:/app
