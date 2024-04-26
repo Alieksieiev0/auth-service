@@ -53,7 +53,7 @@ proto:
 # Live Reload
 watch:
 	@if command -v air > /dev/null; then \
-	    air; \
+	    air -c .air.toml; \
 	    echo "Watching...";\
 	else \
 	    read -p "Go's 'air' is not installed on your machine. Do you want to install it? [Y/n] " choice; \
