@@ -1,8 +1,7 @@
 services:
   auth-service:
-    build: .
+    build: 
+      dockerfile: Dockerfile.production
     ports:
       - "3001:3001"
       - "4001:4001"
-    volumes:
-      - ./:/app
