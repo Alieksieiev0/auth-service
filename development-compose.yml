@@ -1,0 +1,9 @@
+services:
+  auth-service:
+    build: 
+      dockerfile: Dockerfile.development
+    ports:
+      - "3001:3001"
+      - "4001:4001"
+    volumes:
+      - ./:/app
