@@ -78,4 +78,4 @@ only ports 3001 and 4001 are exposed
 
 ### gRPC client
 - Name: grpc-client
-- Default: 3000
+- Default: 4000
