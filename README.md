@@ -3,7 +3,7 @@
 Auth-Service is a microservice, containing logic for authenticating of the user.
 It provides functionality to Register, Login and Read Claims from given JWT token. 
 It does not contain logic to save a user, but it uses a separate microservice for such purposes. 
-This server HTTP API for Register and Login actions. 
+Auth-Service uses HTTP API for Register and Login actions. 
 For Read Claims action gRPC service is used.
 
 ## Getting Started
